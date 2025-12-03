@@ -1,6 +1,6 @@
-# visionario
+# karpeto
 
-Repositorio visionario para centralizar datos, documentos, análisis de mercado y proyectos estratégicos. Acceso compartido para análisis colaborativo y seguimiento de inversiones, trading strategies y análisis de datos.
+Repositorio de instancias para centralizar datos, documentos, análisis de mercado y proyectos estratégicos. despliegue de modelos, proptotipos etc. Acceso compartido para análisis colaborativo y seguimiento de inversiones, trading strategies y análisis de datos.
 
 ## 📁 Estructura de Carpetas
 
