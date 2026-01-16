@@ -76,9 +76,27 @@ Se adjuntan capturas que demuestran el fallo de convergencia del modelo anterior
 
 ---
 
-**CONCLUSIÓN:**
+## 7. 🧬 CÓDIGO FUENTE NUCLEAR (CORE BOT)
+Para auditoría completa, se adjuntan los 10 archivos vivos que componen el cerebro, el sistema nervioso y el corazón del bot:
+
+| ARCHIVO | FUNCIÓN |
+| :--- | :--- |
+| **`[SRC]_sentinel_server.py`** | **El Cerebro.** Runtime principal que orquesta todo. |
+| `[SRC]_feature_engineering.py` | **Matemáticas.** Donde se cocinan los Log Returns y la Volatilidad. |
+| `[SRC]_lstm.py` | **La Neurona.** Definición de la clase del modelo predictivo. |
+| `[SRC]_seldon.py` | **La Policía.** Detector de anomalías (OOD). |
+| `[SRC]_protection.py` | **El Escudo.** Circuit Breaker que corta la luz si hay fallo. |
+| `[SRC]_zmq_bridge.py` | **El Puente.** Comunicación Python <-> MT5. |
+| `[SRC]_ZmqLib.mqh` | **El Extremo MQL5.** Librería crítica para MetaTrader. |
+| `[SRC]_state_manager.py` | **La Memoria.** Gestión del estado interno. |
+| `[SRC]_settings.py` | **La Configuración.** Parámetros globales. |
+| `[SRC]_setup_env.py` | **El Entorno.** Instalador de dependencias. |
+
+---
+
+**CONCLUSIÓN FINAL:**
 Titan V3 ha dejado de ser un experimento. Ahora es un sistema **Adaptativo, Contextual y Valiente**.
-El código está listo para entrenamiento en GPU.
+El código está listo para entrenamiento en GPU y despliegue en VPS.
 
 *Firmado,*
 **ANTIGRAVITY AI (PSJ MODE)**
