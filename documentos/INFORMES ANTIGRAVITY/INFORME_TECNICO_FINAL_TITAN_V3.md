@@ -77,11 +77,13 @@ Se adjuntan capturas que demuestran el fallo de convergencia del modelo anterior
 ---
 
 ## 7. 🧬 CÓDIGO FUENTE NUCLEAR (CORE BOT)
-Para auditoría completa, se adjuntan los 10 archivos vivos que componen el cerebro, el sistema nervioso y el corazón del bot:
+**UBICACIÓN:** Carpeta `TITAN_V3_CORE_SOURCE` (Adjunta en este directorio).
+
+Para auditoría completa, se han aislado los 10 archivos vivos que componen el cerebro, el sistema nervioso y el corazón del bot:
 
 | ARCHIVO | FUNCIÓN |
 | :--- | :--- |
-| **`[SRC]_sentinel_server.py`** | **El Cerebro.** Runtime principal que orquesta todo. |
+| **`sentinel_server.py`** | **El Cerebro.** Runtime principal que orquesta todo. |
 | `[SRC]_feature_engineering.py` | **Matemáticas.** Donde se cocinan los Log Returns y la Volatilidad. |
 | `[SRC]_lstm.py` | **La Neurona.** Definición de la clase del modelo predictivo. |
 | `[SRC]_seldon.py` | **La Policía.** Detector de anomalías (OOD). |
