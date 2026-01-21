@@ -1,0 +1,92 @@
+
+================================================================================
+                    ACHILLES TRADING BOT: ARCHITECTURE & PIPELINE
+================================================================================
+
+[CLOUD ENVIRONMENT: GOOGLE DRIVE / COLAB]         [LOCAL ENVIRONMENT: WINDOWS 11]
+=========================================         ===============================
+
+      +----------------------+
+      |   1. DATA DATASETS   |
+      | [CSV: DotCom, Euro ] | <---+
+      | [CSV: Ukraine, M5  ] |     |
+      +----------------------+     |
+                 |                 |
+                 v                 | Sync (Manual/DriveFS)
+      +----------------------+     |
+      | 2. TRAINING (COLAB)  |     |
+      | - LSTM Architecture  |     |
+      | - MADL Loss Function |     |
+      | - Seldon Labeling    |     |
+      +----------------------+     |
+                 |                 |
+                 v                 |
+      +----------------------+     |            +-------------------------------+
+      | 3. MODEL ARTIFACTS   |     +----------> |      4. BRAIN (PYTHON)        |
+      | - best_model.keras   |                  | [src/brain/api/main.py]       |
+      | - scaler.pkl         |                  |                               |
+      | - metadata.json      |                  |  +-------------------------+  |
+      +----------------------+                  |  |    INFERENCE ENGINE     |  |
+                                                |  | - Load Model (Seldon)   |  |
+                                                |  | - Feature Scaling       |  |
+                                                |  | - Prediction Logic      |  |
+                                                |  +-------------------------+  |
+                                                |              ^                |
+                                                |              |                |
+                                                |        [ZeroMQ (REP)]         |
+                                                |        Port: 5555             |
+                                                |        Latency: <3ms          |
+                                                |              ^                |
+                                                +--------------|----------------+
+                                                               |
+                                                               v
+                                                +-------------------------------+
+                                                |  5. WORKER (METATRADER 5)     |
+                                                | [Experts/Achilles_v2.mq5]     |
+                                                |                               |
+                                                |  +-------------------------+  |
+                                                |  |      R3K GUARDRAILS     |  |
+                                                |  | - Invalid Stops (MathMax|  |
+                                                |  | - Lot Size Checks       |  |
+                                                |  | - Execution Protection  |  |
+                                                |  +-------------------------+  |
+                                                |              ^                |
+                                                |              |                |
+                                                |        [ZeroMQ (REQ)]         |
+                                                |    GetSignal() -> Trade()     |
+                                                +-------------------------------+
+
+
+================================================================================
+                        WORKFLOW OPERATIVO: "ORO PURO"
+================================================================================
+
+      PHASE 1: RESEARCH             PHASE 2: TRAINING             PHASE 3: RUNTIME
+      -----------------             -----------------             ----------------
+
+    [Data Gathering]               [Colab Session]                [Live Market]
+           |                              |                             |
+           v                              v                             v
+    [Feature Eng.]                 [Drive Mount]                   [MT5 Tick]
+    (Macro, Vola)                  (Load CSVs)                          |
+           |                              |                             v
+           v                              v                      [ZMQ Request]
+    [Seldon Labeling]              [LSTM Train]                         |
+    (Crisis Detection)             (AdamW, MADL)                        v
+                                          |                      [Brain Data Prep]
+                                          v                      (Reshape, Scale)
+                                   [Validation]                         |
+                                   (WFO Split)                          v
+                                          |                      [LSTM Predict]
+                                          v                      (Probabilities)
+                                   [Export Model]                       |
+                                   (.keras, .pkl)                       v
+                                          |                      [Signal Gen]
+                                          |                      (Buy/Sell/Hold)
+                                          v                             |
+                                   [Deploy to PC]                       v
+                                                                 [MT5 R3K Check]
+                                                                 (Risk Validation)
+                                                                        |
+                                                                        v
+                                                                 [EXECUTION]

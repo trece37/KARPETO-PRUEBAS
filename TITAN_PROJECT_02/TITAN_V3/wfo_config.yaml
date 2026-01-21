@@ -1,0 +1,54 @@
+# Walk Forward Optimization Configuration
+# Phase 4: Oro Puro R3K Compliance
+
+# [TAG: WFO_ACTIVATION_R3K]
+# Guardrail R3K: Define validation method as mandatory
+validation_method: "Walk Forward Optimization"
+
+# --- TEMPORAL PARAMETERS (WINDOWS) ---
+# [TAG: WFO_OPTIMIZATION_PERIOD_R3K]
+# Justification R3K: In-Sample segment size (e.g., 180 days = 6 months)
+optimization_period:
+  unit: days
+  value: 180
+
+# [TAG: WFO_TEST_PERIOD_R3K]
+# Justification R3K: Out-of-Sample segment size (critical validation)
+test_period:
+  unit: days
+  value: 60
+
+# [TAG: WFO_ROLL_INCREMENT]
+# Justification R3K: How much to move the window each cycle
+roll_forward_by: 60
+
+# [TAG: WFO_START_DATE]
+start_date: "2020-01-01"
+
+# --- SEARCH SPACE (HYPERPARAMETERS) ---
+# Define LSTM hyperparameters to optimize in each window
+search_space:
+  # Example 1: LSTM lookback period
+  - name: "LSTM_WINDOW_SIZE"
+    min: 30
+    max: 120
+    increment: 10
+
+  # Example 2: Stop Loss multiplier
+  - name: "SL_ATR_MULTIPLIER"
+    min: 1.0
+    max: 3.0
+    increment: 0.2
+
+# --- OPTIMIZATION ALGORITHM ---
+# [TAG: WFO_OPTIMIZATION_ALGORITHM]
+# Options: "Exhaustive", "Genetic", "Custom"
+optimizer_algorithm: "Genetic"
+
+# [TAG: WFO_OPTIMIZATION_FITNESS_R3K]
+# CRITICAL: Fitness criterion must focus on risk-adjusted return
+optimize_on: "Sharpe Ratio (Out-of-Sample)"
+
+# [TAG: WFO_FAIL_CRITERIA]
+# Fail if Max Drawdown OOS exceeds threshold
+max_drawdown_oos_threshold: 0.20  # 20%
